@@ -5,42 +5,53 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 
 <body>
+  <div class="container">
+    <div class="left-panel">
+      <form action="/create" method="post">
+        <input type="text" name="filename" placeholder="filename.extension">
+      </form>
+      <hr>
+      <ul>
+        <% files.forEach(function(file){ %>
+          <li>
+            <a href="/<%= file%>">
+              <%= file%>
 
-  <form action="/create" method="post">
-    <input type="text" name="filename">
-    <button>Create File</button>
-  </form>
-  <hr>
-  <ul>
-    <% files.forEach(function(file){ %>
-      <li>
-        <a href="/<%= file%>">
-          <%= file%>
+            </a>
 
-        </a>
+            <a href="/delete/<%= file%>">
 
-        <a href="/delete/<%= file%>">
+              ❌
+            </a>
+          </li>
+          <%})%>
+      </ul>
 
-          ❌
-        </a>
-      </li>
-      <%})%>
-  </ul>
+    </div>
 
-  <hr>
+    <div class="right-panel">
+      <% if(filedata){ %>
 
-  <% if(filedata){ %>
-    <form action="/update/<%= filename%>" method="post">
-      <textarea cols="30" rows="10" name="filedata"> <%=filedata%></textarea>
-      <button>Update</button>
-    </form>
-    <% } else{ %>
-      <h1>No file Selected or Data Not Present.</h1>
-      <% } %>
+        <form action="/update/<%= filename%>" method="post">
+          <div>
 
+
+            <a href="/">
+              <%= filename%> ❌
+            </a>
+            <button>Update</button>
+          </div>
+          <textarea cols="30" rows="10" name="filedata"> <%=filedata%></textarea>
+        </form>
+        <% } else{ %>
+          <h1 class="notfound">No file Selected or Data Not Present.</h1>
+          <% } %>
+    </div>
+  </div>
 </body>
 
 </html>
